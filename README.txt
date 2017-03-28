@@ -4,10 +4,10 @@ Hu Yaxin
 This is assignment3 for CSCI3190 Computational Photography in CUHK.
 It generates an HDR photo by using a serie of photos with different exposure time to reconstruct a radiance map and apply tone mapping.
 
-Requirement 
+
+Requirements 
 
 Basic part
-----------------------------------------------------------------------------------
 1. Radiance Map
 	1.1 Sampling method: the sampling pixels are of equal distance with each other
 	1.2 Construct the matrix
@@ -23,7 +23,6 @@ Basic part
 	# functions: np.nanmax(), np.nanmin(), cv2.bilateralFilter(), np.power(), np.log2(), np.subtract()
 
 Bonus part
-----------------------------------------------------------------------------------
 4. Bilateral Filter (Bonus 1)
 	Compute the filtered image with convolutions 
 	HDR images are created but the speed is slower than openCV function 
