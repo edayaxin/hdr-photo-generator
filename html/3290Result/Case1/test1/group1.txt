@@ -1,0 +1,10 @@
+
+
+N = 100
+
+global tone mapping function
+hdr / (hdr + 2)
+in local tone mapping
+	dR 5
+	result = np.power(img_chromp, 0.2)
+

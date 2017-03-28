@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>CSCI 3290 Assignment3 -- Yaxin HU</title>
+<style>
+body {
+    border-left: 20px solid;
+    border-right: 20px solid;
+    border-color: #FFFCF5;
+
+    background-color: #FFFCF5;
+}
+h1, h2 {
+  font: 30px arial bold, sans-serif;
+  color:#434941;
+}
+p.ex1, p{
+    font: 18px arial bold, sans-serif;
+    color:#434941;
+}
+ul{
+    font: 14px arial bold, sans-serif;
+    color:#434941;
+}
+p.ex2 {
+	font: 20px arial bold, sans-serif;
+	text-align: center;
+}
+
+p.tb1 {
+    font: 14px arial bold, sans-serif;
+    color:#434941;
+    text-align: left;  
+}
+
+p.tb2 {
+    font: 12px arial bold, sans-serif;
+    color:#434941;  
+    text-align: left;
+}
+
+table, th, td {
+    border: 0.3px solid black;
+    border-collapse: collapse;
+    font:16px arial, sans-serif;
+    color:#5D6559;
+    padding: 5px;
+    border-color: #96aa7b;
+}
+ 
+table.imp{
+ 	text-align: left;
+    border: 0.5px dotted solid #ffffff;	
+ 	}   
+div.dis {
+    padding: 10px;
+    font:14px arial, sans-serif;
+    color:#434941;
+}
+br {
+   display: block;
+   margin: 5px 0;
+   color:#434941;
+}
+</style>
+</head>
+
+<h1>CSCI 3290 Assignment3</h1>
+<h2>Yaxin Hu, 1155029165</h2>
+<p>Content</p>
+<ul style="list-style-type:none">
+  <li>1.  Radiance reconstruction</li>
+  <li>1.1 Comparison and remark</li>
+  <li>1.2 Implementation - Matrix</li>
+  <li>1.3 Implementation - HDR</li>  
+</ul>
+<ul style="list-style-type:none">
+  <li>2.  Brute force bilateral filter</li>
+  <li>2.1 HDR results and performance</li>
+  <li>2.2 Filter effects</li>
+  <li>2.3 Implementations</li>
+</ul>
+<ul style="list-style-type:none">
+  <li>3.  Different image set performance</li>
+</ul>
+<ul style="list-style-type:none">
+  <li>4.  HDR experiments on my photos</li>
+  <li>4.1 Photo set 1 and result</li>
+  <li>2.1 PHoto set 2 and result</li>  
+</ul>
+
+<p class="ex2"><b>1. Radiance reconstruction</b></p>
+<p class="ex1">1.1 Comparison and remark</p>
+<div class="dis">
+As many factors affect reconstruction results, HDR images selected below are some good examples. The first column specifies parameters that give such results. 
+</div>
+<table>
+  <tr>
+    <th>Images and remark</th>
+    <th>Local Tone Mapping</th>    
+    <th>Global Tone Mapping</th>
+    <th>Radiance Curve</th>
+  </tr>
+  <tr>
+    <td>
+        <p class=tb1>Case 1:</p>
+        <p class=tb2> N = 100</p>       
+        <p class=tb2>dR=5</p>
+        <p class=tb2> global mapping: hdr / (hdr + 2)</p>
+    </td>
+    <td>
+    	<img src="./3290Result/Case1/test1/global_tone.jpg" width="320" height="240">
+    </td>    
+    <td>
+    	<img src="./3290Result/Case1/test1/local_tone.jpg" width="320" height="240">
+    </td>
+    <td>
+    	<img src="./3290Result/Case1/test1/radiance_curve.png" width="320" height="240">
+    </td>
+  </tr>
+  <tr>
+    <td>
+        <p class=tb1>Case 2:</p>
+        <p class=tb2> N = 100</p>       
+        <p class=tb2>dR=5</p>
+        <p class=tb2>global mapping: hdr / (hdr + 0.5)</p>
+        <p class=tb2>cv2.bilateralFilter(img_L, d=6, sigmaColor=20, sigmaSpace=3)</p>        
+    </td>
+    <td>
+      <img src="./3290Result/Case2/test2/global_tone.jpg" width="320" height="450">
+    </td>    
+    <td>
+      <img src="./3290Result/Case2/test2/local_tone.jpg" width="320" height="450">
+    </td>
+    <td>
+      <img src="./3290Result/Case2/test2/radiance_curve.png" width="320" height="240">
+    </td>    
+  </tr>
+   <tr>
+    <td>
+        <p class=tb1>Case 3:</p>
+        <p class=tb2> N = 100</p>       
+        <p class=tb2>dR=5</p>
+        <p class=tb2>global mapping: hdr / (hdr + 1)</p>
+        <p class=tb2>cv2.bilateralFilter(img_L, d=3, sigmaColor=10, sigmaSpace=3)</p>
+        <p class=tb2>result = np.power(img_chromp, 0.5)</p>        
+    </td>
+    <td>
+      <img src="./3290Result/Case3/test5/global_tone.jpg" width="320" height="240">
+    </td>    
+    <td>
+      <img src="./3290Result/Case3/test5/local_tone.jpg" width="320" height="240">
+    </td>
+    <td>
+      <img src="./3290Result/Case3/test5/radiance_curve.png" width="320" height="240">
+    </td>    
+  </tr> 
+  </tr>
+   <tr>
+    <td>
+        <p class=tb1>Case 4 (my photo):</p>
+        <p class=tb2> N = 100</p>       
+        <p class=tb2>dR=5</p>
+        <p class=tb2>global mapping: hdr / (hdr + 1)</p>
+        <p class=tb2>cv2.bilateralFilter(img_L, d=3, sigmaColor=10, sigmaSpace=3)</p>
+        <p class=tb2>result = np.power(img_chromp, 0.2)</p>        
+    </td>
+    <td>
+      <img src="./3290Result/Case4/global_tone.jpg" width="320" height="240">
+    </td>    
+    <td>
+      <img src="./3290Result/Case4/local_tone.jpg" width="320" height="240">
+    </td>
+    <td>
+      <img src="./3290Result/Case4/radiance_curve.png" width="320" height="240">
+    </td>    
+  </tr> 
+  </tr>
+   <tr>
+    <td>
+        <p class=tb1>Case 5 (my photo):</p>
+        <p class=tb2> N = 100</p>       
+        <p class=tb2>dR=5</p>
+        <p class=tb2>global mapping: hdr / (hdr + 1)</p>
+        <p class=tb2>cv2.bilateralFilter(img_L, d=3, sigmaColor=10, sigmaSpace=3)</p>
+        <p class=tb2>result = np.power(img_chromp, 0.2)</p>        
+    </td>
+    <td>
+      <img src="./3290Result/Case5/global_tone.jpg" width="320" height="240">
+    </td>    
+    <td>
+      <img src="./3290Result/Case5/local_tone.jpg" width="320" height="240">
+    </td>
+    <td>
+      <img src="./3290Result/Case5/radiance_curve.png" width="320" height="240">
+    </td>    
+  </tr> 
+</table>
+
+<br>
+<p class="ex1">1.2 Implementations</p>
+<table class="imp">
+  <tr>
+    <th>Implementation - Matrix</th>
+  </tr>
+  <tr>
+    <td>
+    	<img src="./3290Result/matrixImp.png" width="450" height="500">
+  	</td>
+  <tr>
+  <tr>
+    <th>Implementation - HDR</th>
+  </tr>
+  <tr>
+    <td>
+    	<img src="./3290Result/EiImp.png" width="550" height="180">
+  	</td>
+  <tr> 	
+</table>
+<br>
+
+<p class="ex2"><b>2. Brute force bilateral filter</b></p>
+<p class="ex1">2.1 HDR resutls - compare with OpenCV</p>
+<div class="dis">
+This is the comparison of HDR local tone mapping result from the implemented filter and the OpenCV filter. The performance time shows brute force filter is slower than OpenCV filter.
+</div>
+<table>
+  <tr>
+    <th>Cases</th>
+    <th>HDR from brute force filter</th>    
+    <th>HDR from OpenCV filter</th>
+  </tr>
+  <tr>
+    <td>
+        <p class=tb1>Case 1</p>
+    </td>
+    <td>
+      <img src="./3290Result/BiFilter/1Bi_local_tone.jpg" width="320" height="240">
+    </td>    
+    <td>
+      <img src="./3290Result/Case1/test1/local_tone.jpg" width="320" height="240">
+    </td>
+  </tr>
+    <tr>
+    <td>
+        <p class=tb1>Time</p>
+    </td>
+    <td>
+      <p class=tb1>305.831568</p>
+    </td>    
+    <td>
+      <p class=tb1>171.20745</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+        <p class=tb1>Case 2:</p>      
+    </td>
+    <td>
+      <img src="./3290Result/BiFilter/2Bi_local_tone.jpg" width="320" height="450">
+    </td>    
+    <td>
+      <img src="./3290Result/Case2/test2/local_tone.jpg" width="320" height="450">
+    </td>  
+  </tr>
+    </tr>
+    <tr>
+    <td>
+        <p class=tb1>Time</p>
+    </td>
+    <td>
+      <p class=tb1>219.905934</p>
+    </td>    
+    <td>
+      <p class=tb1>151.755407</p>
+    </td>
+  </tr>
+   <tr>
+    <td>
+        <p class=tb1>Case 3:</p>      
+    </td>
+    <td>
+      <img src="./3290Result/BiFilter/3Bi_local_tone.jpg" width="320" height="240">
+    </td>    
+    <td>
+      <img src="./3290Result/Case3/test5/local_tone.jpg" width="320" height="240">
+    </td>  
+  </tr> 
+  </tr>
+  <tr>
+    <td>
+        <p class=tb1>Time</p>
+    </td>
+    <td>
+      <p class=tb1>113.373543</p>
+    </td>    
+    <td>
+      <p class=tb1>61.55523</p>
+    </td>
+  </tr>
+   <tr>
+    <td>
+        <p class=tb1>Case 4:</p>     
+    </td>
+    <td>
+      <img src="./3290Result/BiFilter/4Bi_local_tone.jpg" width="320" height="240">
+    </td>    
+    <td>
+      <img src="./3290Result/Case4/local_tone.jpg" width="320" height="240">
+    </td>  
+  </tr> 
+  </tr>
+    <tr>
+    <td>
+        <p class=tb1>Time</p>
+    </td>
+    <td>
+      <p class=tb1>135.868749</p>
+    </td>    
+    <td>
+      <p class=tb1>76.573797</p>
+    </td>
+  </tr>
+   <tr>
+    <td>
+        <p class=tb1>Case 5:</p>     
+    </td>
+    <td>
+      <img src="./3290Result/BiFilter/5Bi_local_tone.jpg" width="320" height="240">
+    </td>    
+    <td>
+      <img src="./3290Result/Case5/local_tone.jpg" width="320" height="240">
+    </td>  
+  </tr> 
+  <tr>
+    <td>
+        <p class=tb1>Time</p>
+    </td>
+    <td>
+      <p class=tb1>120.136485</p>
+    </td>    
+    <td>
+      <p class=tb1>63.137754</p>
+    </td>
+  </tr>
+</table>
+
+<br>
+
+<p class="ex1">2.2 Filter Image results - compare with OpenCV</p>
+<div class="dis">
+To further check correctness of the implemented filter, it is applied to images directly, so as the OpenCV bilateral filter. The similarity of the resulting images indicates the two filters take the same effect.
+</div>
+<table>
+  <tr>
+    <th>Cases</th>
+    <th>Image filterd by brute force filter</th>    
+    <th>Image filterd by OpenCV filter</th>
+  </tr>
+  <tr>
+    <td>
+        <p class=tb1>Case 1</p>
+    </td>
+    <td>
+      <img src="./3290Result/BiFilter/Case1Bi/EdaBifilter.jpg" width="320" height="240">
+    </td>    
+    <td>
+      <img src="./3290Result/BiFilter/Case1Bi/CVBifilter.jpg" width="320" height="240">
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+        <p class=tb1>Case 2</p>
+    </td>
+    <td>
+      <img src="./3290Result/BiFilter/Case2Bi/EdaBifilter.jpg" width="320" height="450">
+    </td>    
+    <td>
+      <img src="./3290Result/BiFilter/Case2Bi/CVBifilter.jpg" width="320" height="450">
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+        <p class=tb1>Case 3</p>
+    </td>
+    <td>
+      <img src="./3290Result/BiFilter/Case3Bi/EdaBifilter.jpg" width="320" height="240">
+    </td>    
+    <td>
+      <img src="./3290Result/BiFilter/Case3Bi/CVBifilter.jpg" width="320" height="240">
+    </td>
+  </tr>
+</table>
+<p class="ex1">2.3 Implmentation</p>
+<table class="imp">
+  <tr>
+    <th>Implementations - Bilateral Filter</th>
+  </tr>
+  <tr>
+    <td>
+      <img src="./3290Result/bFilterImp.png" width="600" height="250">
+    </td>
+  <tr>  
+</table>
+<br>
+<p class="ex2"><b>3. Different image set performance</b></p>
+<div class="dis">
+Image of Case 1 is used for this experiment. The first row takes 9 images as input and get ideal result. The second row takes four images of the shorter exposure time. The third row takes five images of the longer exposure time. Information loss is presented in the last two tests because of incomplete exposure time selection.</div>
+<table>
+  <tr>
+    <th>Image range</th>
+    <th>Number of images</th>    
+    <th>HDR local tone mapping result</th>
+    <th>HDR global tone mapping result</th>
+  </tr>
+  <tr>
+    <td>
+        <p class=tb1>Case 1: belg001.jpg - belg009.jpg</p>
+    </td>
+    <td>
+        <p>9</p>
+    </td>
+    <td>
+      <img src="./3290Result/Case1/test1/local_tone.jpg" width="320" height="240">
+    </td>    
+    <td>
+      <img src="./3290Result/Case1/test1/global_tone.jpg" width="320" height="240">
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+        <p class=tb1>Case 1: belg001.jpg - belg004.jpg</p>
+    </td>
+    <td>
+        <p>4</p>
+    </td>
+    <td>
+      <img src="./3290Result/DiffImg/Case1use4/local_tone.jpg" width="320" height="240">
+    </td>    
+    <td>
+      <img src="./3290Result/DiffImg/Case1use4/global_tone.jpg" width="320" height="240">
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+        <p class=tb1>Case 1: belg005.jpg - belg009.jpg</p>
+    </td>
+    <td>
+        <p>5</p>
+    </td>
+    <td>
+      <img src="./3290Result/DiffImg/Case2use5/local_tone.jpg" width="320" height="240">
+    </td>    
+    <td>
+      <img src="./3290Result/DiffImg/Case2use5/global_tone.jpg" width="320" height="240">
+    </td>
+  </tr>
+</table>
+
+<br>
+<p class="ex2"><b>4.  HDR experiments on my photos</b></p>
+<p class="ex1">4.1 Photo set 1</p>
+<table>
+  <tr>
+    <th>Exposure time</th>
+    <th>1</th>
+    <th>1/4</th>
+    <th>1/8</th>
+    <th>1/25</th>
+    <th>1/60</th>
+    <th>1/250</th>
+    <th>1/640</th>
+  </tr>
+  <tr>
+        <th>Photos</th>
+    <td>
+      <img src="./3290Result/Case4/data4/IMG_0913.jpg" width="100" height="80">
+    </td>
+    <td>
+      <img src="./3290Result/Case4/data4/IMG_0914.jpg" width="100" height="80">
+    </td>
+    <td>
+      <img src="./3290Result/Case4/data4/IMG_0915.jpg" width="100" height="80">
+    </td>
+     <td>
+      <img src="./3290Result/Case4/data4/IMG_0917.jpg" width="100" height="80">
+    </td>
+     <td>
+      <img src="./3290Result/Case4/data4/IMG_0918.jpg" width="100" height="80">
+    </td>
+     <td>
+      <img src="./3290Result/Case4/data4/IMG_0919.jpg" width="100" height="80">
+    </td>
+     <td>
+      <img src="./3290Result/Case4/data4/IMG_0921.jpg" width="100" height="80">
+    </td>
+  </tr>
+
+  <tr>
+      <p>Result</p>
+      <img src="./3290Result/Case4/local_tone.jpg" width="400" height="300">
+  </tr>
+</table>
+
+
+<br>
+<p class="ex1">4.2 Photo set 2</p>
+<table>
+  <tr>
+    <th>Exposure time</th>
+    <th>1</th>
+    <th>1/4</th>
+    <th>1/8</th>
+    <th>1/15</th>
+    <th>1/50</th>
+    <th>1/125</th>
+    <th>1/250</th>
+  </tr>
+  <tr>
+    <th>Photos</th>
+    <td>
+      <img src="./3290Result/Case5/data5/IMG_0922.jpg" width="100" height="80">
+    </td>
+    <td>
+      <img src="./3290Result/Case5/data5/IMG_0923.jpg" width="100" height="80">
+    </td>
+    <td>
+      <img src="./3290Result/Case5/data5/IMG_0924.jpg" width="100" height="80">
+    </td>
+     <td>
+      <img src="./3290Result/Case5/data5/IMG_0925.jpg" width="100" height="80">
+    </td>
+     <td>
+      <img src="./3290Result/Case5/data5/IMG_0926.jpg" width="100" height="80">
+    </td>
+     <td>
+      <img src="./3290Result/Case5/data5/IMG_0927.jpg" width="100" height="80">
+    </td>
+     <td>
+      <img src="./3290Result/Case5/data5/IMG_0928.jpg" width="100" height="80">
+    </td>
+  </tr>
+
+  <tr>
+      <p>Result</p>
+      <img src="./3290Result/Case5/local_tone.jpg" width="400" height="300">
+  </tr>
+</table>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+

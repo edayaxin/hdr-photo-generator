@@ -1,0 +1,13 @@
+Performance
+Case 4 (bFilter vs cvFilter)
+135.868749 76.573797
+Case 5 (bFilter vs cvFilter)
+120.136485 63.137754
+Case 1
+305.831568 171.20745
+
+Case 2
+219.905934 151.755407
+
+Case 3
+113.373543 61.55523

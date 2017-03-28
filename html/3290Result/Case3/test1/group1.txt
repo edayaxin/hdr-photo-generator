@@ -1,0 +1,11 @@
+inner_padding = 30
+
+N = 100
+
+global_tone = hdr/(hdr+1)
+
+in local tone mapping
+    img_B = cv2.bilateralFilter(img_L, d=4, sigmaColor=20, sigmaSpace=3)
+	dR 4
+	result = np.power(img_chromp, 0.2)
+

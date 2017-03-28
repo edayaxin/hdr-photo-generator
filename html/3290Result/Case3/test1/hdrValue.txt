@@ -1,0 +1,94 @@
+exp len 9
+expsure is  0 , hdr value is  1810.41327086
+expsure is  1 , hdr value is  905.206635429
+expsure is  2 , hdr value is  452.603317714
+expsure is  3 , hdr value is  226.301658857
+expsure is  4 , hdr value is  108.624796251
+expsure is  5 , hdr value is  54.3123981257
+expsure is  6 , hdr value is  27.1561990629
+expsure is  7 , hdr value is  14.4833061669
+expsure is  8 , hdr value is  7.24165308343
+N*F + n - 1 is  705
+exp len 9
+expsure is  0 , hdr value is  1138.43025562
+expsure is  1 , hdr value is  569.215127812
+expsure is  2 , hdr value is  284.607563906
+expsure is  3 , hdr value is  142.303781953
+expsure is  4 , hdr value is  68.3058153375
+expsure is  5 , hdr value is  34.1529076687
+expsure is  6 , hdr value is  17.0764538344
+expsure is  7 , hdr value is  9.107442045
+expsure is  8 , hdr value is  4.5537210225
+N*F + n - 1 is  705
+exp len 9
+expsure is  0 , hdr value is  1545.05395129
+expsure is  1 , hdr value is  772.526975643
+expsure is  2 , hdr value is  386.263487822
+expsure is  3 , hdr value is  193.131743911
+expsure is  4 , hdr value is  92.7032370772
+expsure is  5 , hdr value is  46.3516185386
+expsure is  6 , hdr value is  23.1758092693
+expsure is  7 , hdr value is  12.3604316103
+expsure is  8 , hdr value is  6.18021580515
+
+
+exp len 9
+expsure is  0 , hdr value is  174.811802084
+g[Z]:  -1.7440453004 Zij:  41
+expsure is  1 , hdr value is  183.567791962
+g[Z]:  -1.00202406067 Zij:  73
+expsure is  2 , hdr value is  239.648733203
+g[Z]:  -0.0422866783018 Zij:  119
+expsure is  3 , hdr value is  166.784403027
+g[Z]:  0.288388241219 Zij:  158
+expsure is  4 , hdr value is  181.121471236
+g[Z]:  1.10482335575 Zij:  212
+expsure is  5 , hdr value is  54.3123981257
+g[Z]:  0.593555145656 Zij:  255
+expsure is  6 , hdr value is  27.1561990629
+g[Z]:  0.593555145656 Zij:  255
+expsure is  7 , hdr value is  14.4833061669
+g[Z]:  0.593555145656 Zij:  255
+expsure is  8 , hdr value is  7.24165308343
+g[Z]:  0.593555145656 Zij:  255
+N*F + n - 1 is  705
+exp len 9
+expsure is  0 , hdr value is  250.811755295
+g[Z]:  -1.38305260013 Zij:  49
+expsure is  1 , hdr value is  251.884107999
+g[Z]:  -0.685639005584 Zij:  89
+expsure is  2 , hdr value is  236.713717927
+g[Z]:  -0.0546094481104 Zij:  134
+expsure is  3 , hdr value is  219.553627393
+g[Z]:  0.563282781515 Zij:  175
+expsure is  4 , hdr value is  236.960078169
+g[Z]:  1.37354711818 Zij:  221
+expsure is  5 , hdr value is  529.047104992
+g[Z]:  2.86988009159 Zij:  254
+expsure is  6 , hdr value is  17.0764538344
+g[Z]:  0.129650344764 Zij:  255
+expsure is  7 , hdr value is  9.107442045
+g[Z]:  0.129650344764 Zij:  255
+expsure is  8 , hdr value is  4.5537210225
+g[Z]:  0.129650344764 Zij:  255
+N*F + n - 1 is  705
+exp len 9
+expsure is  0 , hdr value is  320.333046662
+g[Z]:  -1.1383940536 Zij:  62
+expsure is  1 , hdr value is  311.978744608
+g[Z]:  -0.471673039191 Zij:  105
+expsure is  2 , hdr value is  296.114507576
+g[Z]:  0.169285311574 Zij:  160
+expsure is  3 , hdr value is  397.510404447
+g[Z]:  1.15690737116 Zij:  196
+expsure is  4 , hdr value is  198.013421334
+g[Z]:  1.19399025069 Zij:  234
+expsure is  5 , hdr value is  440.63453286
+g[Z]:  2.68701842653 Zij:  254
+expsure is  6 , hdr value is  23.1758092693
+g[Z]:  0.435058829666 Zij:  255
+expsure is  7 , hdr value is  12.3604316103
+g[Z]:  0.435058829666 Zij:  255
+expsure is  8 , hdr value is  6.18021580515
+g[Z]:  0.435058829666 Zij:  255
+
