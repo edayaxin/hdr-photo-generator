@@ -1,6 +1,10 @@
 CSCI 3290 Assignment 3
-Hu Yaxin, 1155029165
+Hu Yaxin
 
+This is assignment3 for CSCI3190 Computational Photography in CUHK.
+It generates an HDR photo by using a serie of photos with different exposure time to reconstruct a radiance map and apply tone mapping.
+
+Requirement 
 
 Basic part
 ----------------------------------------------------------------------------------
