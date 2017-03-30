@@ -1,6 +1,3 @@
-CSCI 3290 Assignment 3
-Hu Yaxin
-
 This is assignment3 for CSCI3190 Computational Photography in CUHK.
 It generates an HDR photo by using a serie of photos with different exposure time to reconstruct a radiance map and apply tone mapping.
 
@@ -21,13 +18,8 @@ Basic part
 3. Tone Mapping
 	Get result from power 0.2 of the chrominance based on image effects
 	# functions: np.nanmax(), np.nanmin(), cv2.bilateralFilter(), np.power(), np.log2(), np.subtract()
-
-Bonus part
-4. Bilateral Filter (Bonus 1)
+	
+4. Bilateral Filter
 	Compute the filtered image with convolutions 
 	HDR images are created but the speed is slower than openCV function 
 	# functions: np.exp(), np.power(), np.abs()
-
-5. Results from my photos (Bonus 2)
-
-6. Use different number of input images (Bonus 4)
