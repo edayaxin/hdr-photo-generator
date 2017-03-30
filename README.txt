@@ -1,6 +1,8 @@
 This is assignment3 for CSCI3190 Computational Photography in CUHK.
 It generates an HDR photo by using a serie of photos with different exposure time to reconstruct a radiance map and apply tone mapping.
 
+Here is the result report: https://edayaxin.github.io/hdr-photo-generator/
+
 
 Requirements 
 
